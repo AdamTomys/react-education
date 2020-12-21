@@ -28,15 +28,15 @@ class Menu extends React.Component {
       <section className={styles.nav}>
         <div className={styles.navIcon}>{ReactHtmlParser(this.props.icon)}</div>
         <ul>
-        {listArray.map(({key, ...eachList}) => (
-          <li key={key} className={styles.link}>{eachList.title}</li>
-            ))}
-        {columnArray.map(({key, ...eachColumn}) => (
-          <li key={key} className={styles.link}>{eachColumn.title}</li>
-        ))}
+          {listArray.map(({key, ...eachList}) => (
+            <li key={key} className={styles.link}>{eachList.title}</li>
+          ))}
+          {columnArray.map(({key, ...eachColumn}) => (
+            <li key={key} className={styles.link}>{eachColumn.title}</li>
+          ))}
         </ul>
       </section>
-    )
+    );
   }
   
 }
