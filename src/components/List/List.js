@@ -5,15 +5,18 @@ import Column from '../Column/ColumnContainer';
 import PropTypes from 'prop-types';
 import {settings} from '../../data/dataStore';
 import ReactHtmlParser from 'react-html-parser';
-// import Creator from '../Creator/Creator';
+import Creator from '../Creator/Creator';
 
 class List extends React.Component {
 
   static propTypes = {
+    //propsy przekazane przez App
     description: PropTypes.node,
     title: PropTypes.node,
     image: PropTypes.node,
+    //stany z magazynu
     columns: PropTypes.array,
+    addColumn: PropTypes.func,
   };
 
   static defaultProps = {
@@ -21,7 +24,7 @@ class List extends React.Component {
   };
 
   render() {
-    const {columns, description, image, title} = this.props;
+    const {columns, description, image, title, addColumn} = this.props;
     return (
       <section className={styles.component}>
         <Hero titleText={title} image={image}/>
@@ -33,12 +36,12 @@ class List extends React.Component {
             <Column key={columnData.id} {...columnData} />
           ))}
         </div>
-        {/* <div className={styles.creator}>
+        <div className={styles.creator}>
           <Creator
             text={settings.columnCreatorText}
-            action={(title) => this.addColumn(title)}
+            action={addColumn}
           />
-        </div> */}
+        </div>
       </section>
     );
   }
