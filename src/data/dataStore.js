@@ -10,8 +10,22 @@ export const settings = {
     defaultText: 'Search...',
     icon: 'search',
   },
+  header: {
+    logoIcon: 'bars',
+  },
   defaultListDescription: '<p>I can do all the things!!!</p>',
   defaultColumnIcon: 'list-alt',
+};
+
+export const subpageContents = {
+  info: {
+    title: 'Info',
+    content: 'Example content for subpage Info',
+  },
+  faq: {
+    title: 'FAQ',
+    content: 'Frequently Asked Questions',
+  },
 };
 
 export const pageContents = {

@@ -1,56 +1,20 @@
 import React from 'react';
-import styles from './App.scss';
-import List from '../List/ListContainer';
-import Creator from '../Creator/Creator';
-import PropTypes from 'prop-types';
-import Search from '../Search/SearchContainer';
-import {DragDropContext} from 'react-beautiful-dnd';
+import Home from '../Home/HomeContainer';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Info from '../Info/Info';
+import MainLayout from '../MainLayout/MainLayout';
+import Faq from '../FAQ/Faq';
 
-class App extends React.Component {
-  
-  static propTypes = {
-    title: PropTypes.node,
-    subtitle: PropTypes.node,
-    lists: PropTypes.array,
-    addList: PropTypes.func,
-    moveCard: PropTypes.func,
-  }
-  
-moveCardHandler = result => {
-  const {moveCard} = this.props;
-  if(result.destination &&
-    (result.destination.index != result.source.index ||
-      result.destination.droppableId != result.source.droppableId)){
-    moveCard({
-      id: result.draggableId,
-      dest: {
-        index: result.destination.index,
-        columnId: result.destination.droppableId,
-      },
-      src: {
-        index: result.source.index,
-        columnId: result.source.droppableId,
-      },
-    });
-  }
-};
-  
-render() {
-  const {title, subtitle, lists, addList} = this.props;
-  return (
-    <main className={styles.component}>
-      <h1 className={styles.title}>{title}</h1>
-      <h2 className={styles.subtitle}>{subtitle}</h2>
-      <Search />
-      <Creator text='Add new list' action={addList} />
-      <DragDropContext onDragEnd={this.moveCardHandler}>
-        {lists.map(listData => (
-          <List key={listData.id} {...listData} />
-        ))}
-      </DragDropContext>
-    </main>
-  );
-}
-}
+const App = () => (
+  <BrowserRouter>
+    <MainLayout>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/info' component={Info} />
+        <Route exact path='/faq' component={Faq} />
+      </Switch>
+    </MainLayout>
+  </BrowserRouter>
+);
 
 export default App;
