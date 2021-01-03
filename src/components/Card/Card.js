@@ -6,8 +6,7 @@ import {Draggable} from 'react-beautiful-dnd';
 const Card = ({id, title, index} = this.props) => (
   <Draggable draggableId={id} index={index}>
     {(provided) => (
-      <div className={styles.component}
-        {...provided.draggableProps}
+      <div className={styles.component} {...provided.draggableProps}
         {...provided.dragHandleProps}
         ref={provided.innerRef}>
         {title}

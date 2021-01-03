@@ -1,8 +1,11 @@
 import shortid from 'shortid';
 
-export const getCardsForColumn = ({cards, searchString}, columnId) =>
-  cards.filter((card) => card.columnId == columnId && new RegExp(searchString, 'i').test(card.title));
+export const getCardsForColumn = ({cards}, columnId) =>
+  cards.filter((card) => card.columnId == columnId);
   
+export const getSearchResults = ({cards}, searchString) =>
+  cards.filter((card) => new RegExp(searchString, 'i').test(card.title));
+
 const reducerName = 'cards';
 const createActionName = (name) => `app/${reducerName}/${name}`;
 
@@ -33,14 +36,13 @@ export default function reducer(state = [], action = {}) {
         return state.map(card => {
           const targetColumnIndex = targetColumnCards.indexOf(card);
           if(targetColumnIndex > -1 && card.index != targetColumnIndex) {
-            console.log({...card, index: targetColumnIndex});
             return {...card, index: targetColumnIndex};
           } else {
             return card;
           }
-        });
+        }).sort((a, b) => a.index - b.index);
       } else {
-        let sourceColumnCards = state.filter(card => card.columnId == src.columnId).sort((a, b) => a.index - b.index);
+        let sourceColumnCards = state.filter(card => card.columnId == src.columnId).sort((a, b) => a.index < b.index);
 
         // remove card from sourceColumn
         sourceColumnCards.splice(src.index, 1);
@@ -55,7 +57,6 @@ export default function reducer(state = [], action = {}) {
             return {...card, index: targetColumnIndex, columnId: dest.columnId};
           } else if(targetColumnIndex > -1 && card.index != targetColumnIndex){
             // card is in targetColumn
-            console.log({...card, index: targetColumnIndex});
             return {...card, index: targetColumnIndex};
           } else {
             // card is NOT in targetColumn
@@ -69,7 +70,7 @@ export default function reducer(state = [], action = {}) {
               return card;
             }
           }
-        });
+        }).sort((a, b) => a.index < b.index);
       }
     }
     default:
